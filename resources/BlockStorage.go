@@ -7,6 +7,7 @@ import (
 func resource_n0stack_blockstorage() *schema.Resource {
 	return &schema.Resource{
 		Create: resource_n0stack_blockstorage_create,
+		Fetch: resource_n0stack_blockstorage_fetch,
 		Read: resource_n0stack_blockstorage_read,
 		Update: resource_n0stack_blockstorage_update,
 		Delete: resource_n0stack_blockstorage_delete,
@@ -42,10 +43,18 @@ func resource_n0stack_blockstorage() *schema.Resource {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
+			"source_url": {
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
 		}
 }
 
 func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
+	return nil
+}
+
+func resource_n0stack_blockstorage_fetch(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
