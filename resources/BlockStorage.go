@@ -1,7 +1,9 @@
 package main
 
 import (
+	"google.golang.org/grpc"
         "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	pprovisioning "github.com/n0stack/n0stack/n0proto.go/provisioning/v0"
 )
 
 func resource_n0stack_blockstorage() *schema.Resource {
@@ -55,6 +57,13 @@ func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface
 }
 
 func resource_n0stack_blockstorage_fetch(d *schema.ResourceData, meta interface{}) error {
+	conn, err := grpc.Dial("localhost:20180", grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client := pprovisioning.NewBlockStorageServiceClient(conn)
 	return nil
 }
 
