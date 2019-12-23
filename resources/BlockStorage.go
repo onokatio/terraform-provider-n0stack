@@ -50,6 +50,7 @@ func resource_n0stack_blockstorage() *schema.Resource {
 				Optional: true,
 			},
 		},
+	}
 }
 
 func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
