@@ -46,7 +46,7 @@ func resource_n0stack_blockstorage() *schema.Resource {
 				Required: true,
 			},
 			"source_url": {
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 		},
@@ -69,20 +69,37 @@ func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface
 	}
 	defer conn.Close()
 
-	client := pprovisioning.NewBlockStorageServiceClient(conn)
-	request := pprovisioning.CreateBlockStorageRequest{
-		Name: d.Get("blockstorage_name").(string) ,
-		Annotations: interfaceMap2stringMap(d.Get("annotations").(map[string]interface{})),
-		Labels: interfaceMap2stringMap(d.Get("labels").(map[string]interface{})),
-		RequestBytes: uint64(d.Get("request_bytes").(int)) ,
-		LimitBytes: uint64(d.Get("limit_bytes").(int)),
-		//SourceUrl: d.Get("source_url").(string),
+	if(d.Get("source_url").(string) != ""){
+		client := pprovisioning.NewBlockStorageServiceClient(conn)
+		request := pprovisioning.FetchBlockStorageRequest{
+			Name: d.Get("blockstorage_name").(string) ,
+			Annotations: interfaceMap2stringMap(d.Get("annotations").(map[string]interface{})),
+			Labels: interfaceMap2stringMap(d.Get("labels").(map[string]interface{})),
+			RequestBytes: uint64(d.Get("request_bytes").(int)) ,
+			LimitBytes: uint64(d.Get("limit_bytes").(int)),
+			SourceUrl: d.Get("source_url").(string),
+		}
+		res, err := client.FetchBlockStorage(context.Background(), &request)
+		if err != nil {
+			return err
+		}
+		d.SetId(res.Name)
+	} else {
+		client := pprovisioning.NewBlockStorageServiceClient(conn)
+		request := pprovisioning.CreateBlockStorageRequest{
+			Name: d.Get("blockstorage_name").(string) ,
+			Annotations: interfaceMap2stringMap(d.Get("annotations").(map[string]interface{})),
+			Labels: interfaceMap2stringMap(d.Get("labels").(map[string]interface{})),
+			RequestBytes: uint64(d.Get("request_bytes").(int)) ,
+			LimitBytes: uint64(d.Get("limit_bytes").(int)),
+		}
+		res, err := client.CreateBlockStorage(context.Background(), &request)
+		if err != nil {
+			return err
+		}
+		d.SetId(res.Name)
 	}
-	res, err := client.CreateBlockStorage(context.Background(), &request)
-	if err != nil {
-		return err
-	}
-	d.SetId(res.Name)
+
 	return resource_n0stack_blockstorage_read(d, meta)
 }
 

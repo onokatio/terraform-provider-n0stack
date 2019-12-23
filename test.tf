@@ -2,16 +2,17 @@ provider "n0stack" {
 	endpoint = "192.168.1.31:20180"
 }
 
-resource "n0stack_blockstorage" "example" {
-	blockstorage_name = "test_storage"
+resource "n0stack_blockstorage" "FetchUbuntuDisk" {
+	blockstorage_name = "ubuntu-bionic"
 	annotations = {
-		annotation1 = "hoge"
 		"n0core/provisioning/block_storage/request_node_name" = "archlinux"
-		"n0core/provisioning/block_storage/url"               = "file:///var/lib/n0core/block_storage/test_storage"
+		"n0core/provisioning/block_storage/url"               = "file:///var/lib/n0core/block_storage/ubuntu-bionic"
+		"n0core/provisioning/block_storage/fetch_from"        = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
 	}
 	labels = {
 		label1 = "hoge"
 	}
-	request_bytes = 100
-	limit_bytes = 100
+	request_bytes = 1073741824
+	limit_bytes = 10737418240
+	source_url = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
 }
