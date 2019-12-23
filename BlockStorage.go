@@ -113,5 +113,19 @@ func resource_n0stack_blockstorage_update(d *schema.ResourceData, meta interface
 }
 
 func resource_n0stack_blockstorage_delete(d *schema.ResourceData, meta interface{}) error {
+	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client := pprovisioning.NewBlockStorageServiceClient(conn)
+	request := pprovisioning.DeleteBlockStorageRequest{
+		Name: d.Get("blockstorage_name").(string) ,
+	}
+	_, err = client.DeleteBlockStorage(context.Background(), &request)
+	if err != nil {
+		return err
+	}
 	return nil
 }
