@@ -53,14 +53,6 @@ func resource_n0stack_blockstorage() *schema.Resource {
 	}
 }
 
-func interfaceMap2stringMap(input map[string]interface{})  map[string]string {
-	output := make(map[string]string)
-	for key, value := range input {
-		output[key] = value.(string)
-	}
-	return output
-}
-
 func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
 	config := meta.(Config)
 	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
