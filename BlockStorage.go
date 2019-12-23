@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"google.golang.org/grpc"
         "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	pprovisioning "github.com/onokatio/terraform-provider-n0stack/n0proto.go/provisioning/v0"
@@ -9,7 +10,6 @@ import (
 func resource_n0stack_blockstorage() *schema.Resource {
 	return &schema.Resource{
 		Create: resource_n0stack_blockstorage_create,
-		Fetch: resource_n0stack_blockstorage_fetch,
 		Read: resource_n0stack_blockstorage_read,
 		Update: resource_n0stack_blockstorage_update,
 		Delete: resource_n0stack_blockstorage_delete,
@@ -17,13 +17,13 @@ func resource_n0stack_blockstorage() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"image_name": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"tag": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
-			"block_storage_name": {
+			"blockstorage_name": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -53,33 +53,36 @@ func resource_n0stack_blockstorage() *schema.Resource {
 	}
 }
 
-func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
-	return nil
+func interfaceMap2stringMap(input map[string]interface{})  map[string]string {
+	output := make(map[string]string)
+	for key, value := range input {
+		output[key] = value.(string)
+	}
+	return output
 }
 
-func resource_n0stack_blockstorage_fetch(d *schema.ResourceData, meta interface{}) error {
-	conn, err := grpc.Dial("localhost:20180", grpc.WithInsecure())
+func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
+	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
 	if err != nil {
 		return err
 	}
 	defer conn.Close()
 
 	client := pprovisioning.NewBlockStorageServiceClient(conn)
-	request := pprovisioning.FetchBlockStorageRequest{
-		Name: "hoge",
-		Annotations: "hoge",
-		Labels: "hoge",
-		RequestBytes: 100,
-		LimitBytes: 100,
-		SourceUrl: "https://example.com",
+	request := pprovisioning.CreateBlockStorageRequest{
+		Name: d.Get("blockstorage_name").(string) ,
+		Annotations: interfaceMap2stringMap(d.Get("annotations").(map[string]interface{})),
+		Labels: interfaceMap2stringMap(d.Get("labels").(map[string]interface{})),
+		RequestBytes: uint64(d.Get("request_bytes").(int)) ,
+		LimitBytes: uint64(d.Get("limit_bytes").(int)),
+		//SourceUrl: d.Get("source_url").(string),
 	}
-	res, err := client.FetchBlockStorage(context.Background(), &client)
+	res, err := client.CreateBlockStorage(context.Background(), &request)
 	if err != nil {
-		PrintGrpcError(err)
-		return nil
+		return err
 	}
-	//return resource_n0stack_blockstorage_read(d, meta)
-	return nil
+	d.SetId(res.Name)
+	return resource_n0stack_blockstorage_read(d, meta)
 }
 
 func resource_n0stack_blockstorage_read(d *schema.ResourceData, meta interface{}) error {

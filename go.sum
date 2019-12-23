@@ -146,6 +146,8 @@ github.com/mitchellh/reflectwalk v1.0.1 h1:FVzMWA5RllMAKIdUSC8mdWo3XtwoecrH79BY7
 github.com/mitchellh/reflectwalk v1.0.1/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/n0stack/n0stack v0.1.1 h1:BNlBglgOHzpHRByYc1rpsTSgFGm2sFPmJKMfveyr3VU=
 github.com/n0stack/n0stack v0.1.1/go.mod h1:nNr90NQbAS2gPkGpLC2k8FhytxmZxf+v937L/WjFk0g=
+github.com/nsf/gocode v0.0.0-20190302080247-5bee97b48836 h1:oc3CL18CoGhyOQJ7HDa9gJAde33bwI8Vi28zLdIzJVc=
+github.com/nsf/gocode v0.0.0-20190302080247-5bee97b48836/go.mod h1:6Q8/OMaaKAgTX7/jt2bOXVDrm1eJhoNd+iwzghR7jvs=
 github.com/oklog/run v1.0.0 h1:Ru7dDtJNOyC66gQ5dQmaCa0qIsAUFY3sFpK1Xk8igrw=
 github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=
 github.com/pierrec/lz4 v2.0.5+incompatible/go.mod h1:pdkljMzZIN41W+lC3N2tnIh5sFi+IEE17M5jbnwPHcY=
