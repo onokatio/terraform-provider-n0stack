@@ -21,6 +21,8 @@ resource "n0stack_image" "RegisterUbuntuAsImageLatest" {
 	image_name = "ubuntu-bionic-image"
 	tags = ["latest"]
 	blockstorage_name = "ubuntu-bionic"
+
+	depends_on = [n0stack_blockstorage.FetchUbuntuDisk]
 }
 
 
@@ -33,4 +35,6 @@ resource "n0stack_blockstorage" "CreateNewDiskFromImage" {
 	}
 	request_bytes = 1073741824
 	limit_bytes = 10737418240
+
+	depends_on = [n0stack_image.RegisterUbuntuAsImageLatest]
 }
