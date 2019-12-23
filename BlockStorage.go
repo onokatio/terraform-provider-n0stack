@@ -86,6 +86,25 @@ func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface
 }
 
 func resource_n0stack_blockstorage_read(d *schema.ResourceData, meta interface{}) error {
+	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client := pprovisioning.NewBlockStorageServiceClient(conn)
+	request := pprovisioning.GetBlockStorageRequest{
+		Name: d.Get("blockstorage_name").(string) ,
+	}
+	res, err := client.GetBlockStorage(context.Background(), &request)
+	if err != nil {
+		return err
+	}
+	d.Set("blockstorage_name", res.Name)
+	d.Set("annotations", res.Annotations)
+	d.Set("labels", res.Labels)
+	d.Set("request_bytes", res.RequestBytes)
+	d.Set("limit_bytes", res.LimitBytes)
 	return nil
 }
 
