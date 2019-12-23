@@ -16,3 +16,9 @@ resource "n0stack_blockstorage" "FetchUbuntuDisk" {
 	limit_bytes = 10737418240
 	source_url = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
 }
+
+resource "n0stack_image" "RegisterUbuntuAsImage" {
+	image_name = "ubuntu-bionic-image"
+	tags = ["latest"]
+	blockstorage_name = "ubuntu-bionic"
+}
