@@ -109,7 +109,7 @@ func resource_n0stack_blockstorage_read(d *schema.ResourceData, meta interface{}
 }
 
 func resource_n0stack_blockstorage_update(d *schema.ResourceData, meta interface{}) error {
-	return nil
+	return resource_n0stack_blockstorage_read(d, meta)
 }
 
 func resource_n0stack_blockstorage_delete(d *schema.ResourceData, meta interface{}) error {
