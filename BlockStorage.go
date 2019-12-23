@@ -155,5 +155,5 @@ func resource_n0stack_blockstorage_delete(d *schema.ResourceData, meta interface
 	if err != nil {
 		return err
 	}
-	return nil
+	return resource_n0stack_blockstorage_read(d, meta)
 }
