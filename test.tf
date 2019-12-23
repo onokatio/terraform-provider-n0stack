@@ -22,3 +22,15 @@ resource "n0stack_image" "RegisterUbuntuAsImageLatest" {
 	tags = ["latest"]
 	blockstorage_name = "ubuntu-bionic"
 }
+
+
+resource "n0stack_blockstorage" "CreateNewDiskFromImage" {
+	image_name = "ubuntu-bionic-image"
+	tag = "latest"
+	blockstorage_name = "test-disk"
+	annotations = {
+		"n0core/provisioning/block_storage/request_node_name" = "archlinux"
+	}
+	request_bytes = 1073741824
+	limit_bytes = 10737418240
+}

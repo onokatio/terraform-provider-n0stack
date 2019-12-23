@@ -5,6 +5,7 @@ import (
 	"google.golang.org/grpc"
         "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	pprovisioning "github.com/onokatio/terraform-provider-n0stack/n0proto.go/provisioning/v0"
+	pdeployment "github.com/onokatio/terraform-provider-n0stack/n0proto.go/deployment/v0"
 )
 
 func resource_n0stack_blockstorage() *schema.Resource {
@@ -34,7 +35,7 @@ func resource_n0stack_blockstorage() *schema.Resource {
 			},
 			"labels": {
 				Type:     schema.TypeMap,
-				Required: true,
+				Optional: true,
 				Elem: schema.TypeString,
 			},
 			"request_bytes": {
@@ -72,6 +73,21 @@ func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface
 			SourceUrl: d.Get("source_url").(string),
 		}
 		res, err := client.FetchBlockStorage(context.Background(), &request)
+		if err != nil {
+			return err
+		}
+		d.SetId(res.Name)
+	} else if(d.Get("image_name").(string) != ""){
+		client := pdeployment.NewImageServiceClient(conn)
+		request := pdeployment.GenerateBlockStorageRequest{
+			ImageName: d.Get("image_name").(string) ,
+			BlockStorageName: d.Get("blockstorage_name").(string) ,
+			Annotations: interfaceMap2stringMap(d.Get("annotations").(map[string]interface{})),
+			RequestBytes: uint64(d.Get("request_bytes").(int)) ,
+			LimitBytes: uint64(d.Get("limit_bytes").(int)),
+			Tag: d.Get("tag").(string),
+		}
+		res, err := client.GenerateBlockStorage(context.Background(), &request)
 		if err != nil {
 			return err
 		}
