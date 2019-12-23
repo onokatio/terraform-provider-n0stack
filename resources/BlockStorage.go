@@ -49,7 +49,7 @@ func resource_n0stack_blockstorage() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-		}
+		},
 }
 
 func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
@@ -64,6 +64,15 @@ func resource_n0stack_blockstorage_fetch(d *schema.ResourceData, meta interface{
 	defer conn.Close()
 
 	client := pprovisioning.NewBlockStorageServiceClient(conn)
+	request := pprovisioning.FetchBlockStorageRequest{
+		Name: "hoge",
+		Annotations: "hoge",
+		Labels: "hoge",
+		RequestBytes: 100,
+		LimitBytes: 100,
+		SourceUrl: "https://example.com",
+	}
+	res, err := client.FetchBlockStorage(context.Background(), &client)
 	return nil
 }
 
