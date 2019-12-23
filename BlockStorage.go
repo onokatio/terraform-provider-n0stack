@@ -62,7 +62,8 @@ func interfaceMap2stringMap(input map[string]interface{})  map[string]string {
 }
 
 func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface{}) error {
-	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
+	config := meta.(Config)
+	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
 	if err != nil {
 		return err
 	}
@@ -86,7 +87,8 @@ func resource_n0stack_blockstorage_create(d *schema.ResourceData, meta interface
 }
 
 func resource_n0stack_blockstorage_read(d *schema.ResourceData, meta interface{}) error {
-	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
+	config := meta.(Config)
+	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
 	if err != nil {
 		return err
 	}
@@ -113,7 +115,8 @@ func resource_n0stack_blockstorage_update(d *schema.ResourceData, meta interface
 }
 
 func resource_n0stack_blockstorage_delete(d *schema.ResourceData, meta interface{}) error {
-	conn, err := grpc.Dial("192.168.1.31:20180", grpc.WithInsecure())
+	config := meta.(Config)
+	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,5 @@
 provider "n0stack" {
+	endpoint = "192.168.1.31:20180"
 }
 
 resource "n0stack_blockstorage" "example" {

@@ -5,10 +5,28 @@ import (
 )
 
 func Provider() *schema.Provider {
-        return &schema.Provider{
-		Schema: map[string]*schema.Schema{},
+	provider := &schema.Provider{
+		Schema: map[string]*schema.Schema{
+			"endpoint": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
+		},
                 ResourcesMap: map[string]*schema.Resource{
 			"n0stack_blockstorage": resource_n0stack_blockstorage(),
 		},
         }
+	provider.ConfigureFunc = func (d *schema.ResourceData) (interface{}, error) {
+		endpoint := d.Get("endpoint").(string)
+		config := Config{
+			endpoint: endpoint,
+		}
+		return config, nil
+	}
+        return provider
 }
+
+type Config struct {
+	endpoint string
+}
+
