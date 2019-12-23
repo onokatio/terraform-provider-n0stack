@@ -17,7 +17,7 @@ resource "n0stack_blockstorage" "FetchUbuntuDisk" {
 	source_url = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
 }
 
-resource "n0stack_image" "RegisterUbuntuAsImage" {
+resource "n0stack_image" "RegisterUbuntuAsImageLatest" {
 	image_name = "ubuntu-bionic-image"
 	tags = ["latest"]
 	blockstorage_name = "ubuntu-bionic"

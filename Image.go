@@ -68,17 +68,54 @@ func resource_n0stack_image_create(d *schema.ResourceData, meta interface{}) err
 
 	d.SetId(d.Get("image_name").(string))
 
-	return resource_n0stack_blockstorage_read(d, meta)
+	return resource_n0stack_image_read(d, meta)
 }
 
 func resource_n0stack_image_read(d *schema.ResourceData, meta interface{}) error {
+	config := meta.(Config)
+	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client := pdeployment.NewImageServiceClient(conn)
+
+	request := pdeployment.GetImageRequest{
+		Name: d.Get("image_name").(string) ,
+	}
+	res, err := client.GetImage(context.Background(), &request)
+	if err != nil {
+		return err
+	}
+
+	d.Set("image_name",res.Name)
+	d.Set("tags",res.Tags)
+	//d.Set("blockstorage_name",res.RegisteredBlockStorages)
 	return nil
 }
 
 func resource_n0stack_image_update(d *schema.ResourceData, meta interface{}) error {
-	return resource_n0stack_image_read(d, meta)
+	return nil
 }
 
 func resource_n0stack_image_delete(d *schema.ResourceData, meta interface{}) error {
-	return nil
+	config := meta.(Config)
+	conn, err := grpc.Dial(config.endpoint, grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	client := pdeployment.NewImageServiceClient(conn)
+
+	request := pdeployment.DeleteImageRequest{
+		Name: d.Get("image_name").(string) ,
+	}
+	_, err = client.DeleteImage(context.Background(), &request)
+	if err != nil {
+		return err
+	}
+
+	return resource_n0stack_image_read(d, meta)
 }
