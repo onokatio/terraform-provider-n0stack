@@ -16,6 +16,7 @@ func Provider() *schema.Provider {
 			"n0stack_blockstorage": resource_n0stack_blockstorage(),
 			"n0stack_image": resource_n0stack_image(),
 			"n0stack_network": resource_n0stack_network(),
+			"n0stack_virtualmachine": resource_n0stack_virtualmachine(),
 		},
         }
 	provider.ConfigureFunc = func (d *schema.ResourceData) (interface{}, error) {
