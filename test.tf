@@ -48,19 +48,19 @@ resource "n0stack_network" "CreateNetwork" {
 resource "n0stack_virtualmachine" "CreateVM" {
 	name = "test-vm"
 	annotations = {
-		"n0core/provisioning/virtual_machine/request_node_name" = "vm-host1"
+		"n0core/provisioning/virtual_machine/request_node_name" = "archlinux"
 	}
 	request_cpu_milli_core = 10
 	limit_cpu_milli_core = 1000
 	request_memory_bytes = 536870912
 	limit_memory_bytes = 536870912
 	block_storage_names = ["test-disk"]
-	nics = [
-		{
-			network_name = "test-network"
-			ipv4_address = "192.168.100.1"
-		},
-	]
+
+	nics {
+		network_name = "test-network"
+		ipv4_address = "192.168.100.1"
+	}
+
 	depends_on = [
 		n0stack_blockstorage.CreateNewDiskFromImage,
 		n0stack_network.CreateNetwork,

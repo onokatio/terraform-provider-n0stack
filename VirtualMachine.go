@@ -86,7 +86,7 @@ func resource_n0stack_virtualmachine_create(d *schema.ResourceData, meta interfa
 
 	client := pprovisioning.NewVirtualMachineServiceClient(conn)
 
-	nics := make([]*(pprovisioning.VirtualMachineNIC), len(d.Get("nics").([]interface{})) )
+	nics := make([]*(pprovisioning.VirtualMachineNIC),0)
 	for _, value := range d.Get("nics").([]interface{}) {
 		nic := pprovisioning.VirtualMachineNIC{}
 		element := value.(map[string]interface{})
