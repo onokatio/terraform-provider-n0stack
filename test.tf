@@ -6,14 +6,13 @@ resource "n0stack_blockstorage" "FetchUbuntuDisk" {
 	blockstorage_name = "ubuntu-bionic"
 	annotations = {
 		"n0core/provisioning/block_storage/request_node_name" = "archlinux"
-		"n0core/provisioning/block_storage/fetch_from"        = "http://localhost/bionic-server-cloudimg-amd64.img"
 	}
 	labels = {
 		label1 = "hoge"
 	}
 	request_bytes = 1073741824
 	limit_bytes = 10737418240
-	source_url = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
+	source_url = "http://localhost/bionic-server-cloudimg-amd64.img"
 }
 
 resource "n0stack_image" "RegisterUbuntuAsImageLatest" {
