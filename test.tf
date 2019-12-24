@@ -6,8 +6,7 @@ resource "n0stack_blockstorage" "FetchUbuntuDisk" {
 	blockstorage_name = "ubuntu-bionic"
 	annotations = {
 		"n0core/provisioning/block_storage/request_node_name" = "archlinux"
-		"n0core/provisioning/block_storage/url"               = "file:///var/lib/n0core/block_storage/ubuntu-bionic"
-		"n0core/provisioning/block_storage/fetch_from"        = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
+		"n0core/provisioning/block_storage/fetch_from"        = "http://localhost/bionic-server-cloudimg-amd64.img"
 	}
 	labels = {
 		label1 = "hoge"
