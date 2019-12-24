@@ -16,7 +16,9 @@ n0stackのリソースをTerraformから扱えるもの
 # インストール方法
 
 1. Github Releaseから実行ファイルをダウンロードし、`terraform-provider-n0stack`という名前へ変更する
-2. `terraform-provider-n0stack`がカレントディレクトリにある状態で、`terraform init`を行うと、今後そのディレクトリ内の`.tf`ファイルからn0stackのproviderが使えるようになる。
+2. `terraform-provider-n0stack`がカレントディレクトリにある状態で、`terraform init`を行う
+
+今後そのディレクトリ内の`.tf`ファイルからn0stackのproviderが使えるようになる。既存のディレクトリへ実行ファイルをコピーして`terraform init`でも可能。
 
 # 使い方
 
