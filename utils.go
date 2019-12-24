@@ -9,7 +9,7 @@ func interfaceMap2stringMap(input map[string]interface{})  map[string]string {
 }
 
 func interfaceList2stringList(input []interface{})  []string {
-	output := make([]string, len(input))
+	output := make([]string, 0)
 	for _, value := range input {
 		output = append(output,value.(string))
 	}
