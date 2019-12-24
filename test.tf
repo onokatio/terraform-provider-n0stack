@@ -36,3 +36,11 @@ resource "n0stack_blockstorage" "CreateNewDiskFromImage" {
 
 	depends_on = [n0stack_image.RegisterUbuntuAsImageLatest]
 }
+
+resource "n0stack_network" "CreateNetwork" {
+	name = "test-network"
+	ipv4_cidr = "192.168.100.0/24"
+	annotations = {
+		"n0core/provisioning/block_storage/request_node_name" = "archlinux"
+	}
+}
