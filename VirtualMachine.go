@@ -4,7 +4,7 @@ import (
 	"context"
 	"google.golang.org/grpc"
         "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	pprovisioning "github.com/onokatio/terraform-provider-n0stack/n0proto.go/provisioning/v0"
+	pprovisioning "github.com/n0stack/n0stack/n0proto.go/provisioning/v0"
 )
 
 func resource_n0stack_virtualmachine() *schema.Resource {

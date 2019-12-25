@@ -4,7 +4,7 @@ import (
 	"context"
 	"google.golang.org/grpc"
         "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	ppool "github.com/onokatio/terraform-provider-n0stack/n0proto.go/pool/v0"
+	ppool "github.com/n0stack/n0stack/n0proto.go/pool/v0"
 )
 
 func resource_n0stack_network() *schema.Resource {
