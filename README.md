@@ -106,7 +106,7 @@ resource "n0stack_virtualmachine" "MyVM" {
 
 ほとんどの場合、キーとバリューの意味はn0cli doコマンドのyamlと同じです。
 
-### プロバイダ設定
+### provider
 
 ```hcl
 provider "n0stack" {
