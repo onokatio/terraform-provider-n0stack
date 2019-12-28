@@ -148,12 +148,24 @@ func resource_n0stack_blockstorage_delete(d *schema.ResourceData, meta interface
 	defer conn.Close()
 
 	client := pprovisioning.NewBlockStorageServiceClient(conn)
-	request := pprovisioning.DeleteBlockStorageRequest{
-		Name: d.Get("blockstorage_name").(string) ,
+	{
+		request := pprovisioning.DeleteBlockStorageRequest{
+			Name: d.Get("blockstorage_name").(string) ,
+		}
+		_, err = client.DeleteBlockStorage(context.Background(), &request)
+		if err != nil {
+			return err
+		}
 	}
-	_, err = client.DeleteBlockStorage(context.Background(), &request)
-	if err != nil {
-		return err
+	{
+		request := pprovisioning.PurgeBlockStorageRequest{
+			Name: d.Get("blockstorage_name").(string) ,
+		}
+		_, err = client.PurgeBlockStorage(context.Background(), &request)
+		if err != nil {
+			return err
+		}
 	}
+
 	return nil
 }
