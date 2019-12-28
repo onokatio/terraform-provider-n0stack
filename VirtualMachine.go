@@ -52,6 +52,13 @@ func resource_n0stack_virtualmachine() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+			"ssh_authorized_keys": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"nics": {
 				Type:     schema.TypeList,
 				Required: true,
@@ -105,6 +112,7 @@ func resource_n0stack_virtualmachine_create(d *schema.ResourceData, meta interfa
 		RequestMemoryBytes: uint64(d.Get("request_memory_bytes").(int)),
 		LimitMemoryBytes: uint64(d.Get("limit_memory_bytes").(int)),
 		BlockStorageNames: interfaceList2stringList(d.Get("block_storage_names").([]interface{})),
+		SshAuthorizedKeys: interfaceList2stringList(d.Get("ssh_authorized_keys").([]interface{})),
 		Nics: nics,
 	}
 	_, err = client.CreateVirtualMachine(context.Background(), &request)
