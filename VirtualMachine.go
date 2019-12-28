@@ -169,5 +169,5 @@ func resource_n0stack_virtualmachine_delete(d *schema.ResourceData, meta interfa
 		return err
 	}
 
-	return resource_n0stack_virtualmachine_read(d, meta)
+	return nil
 }

@@ -116,5 +116,5 @@ func resource_n0stack_network_delete(d *schema.ResourceData, meta interface{}) e
 		return err
 	}
 
-	return resource_n0stack_network_read(d, meta)
+	return nil
 }

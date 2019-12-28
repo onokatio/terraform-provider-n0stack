@@ -117,5 +117,5 @@ func resource_n0stack_image_delete(d *schema.ResourceData, meta interface{}) err
 		return err
 	}
 
-	return resource_n0stack_image_read(d, meta)
+	return nil
 }
