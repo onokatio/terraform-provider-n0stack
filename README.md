@@ -36,7 +36,7 @@ n0stackのリソースをTerraformから扱えるもの
 
 ## ざっくりイメージを作る
 
-```
+```hcl
 provider "n0stack" {
 	endpoint = "192.168.1.31:20180"
 }
@@ -60,7 +60,7 @@ resource "n0stack_image" "Ubuntu-Cloudimage-Image" {
 
 ## (作ったイメージを使って) VMを作る
 
-```
+```hcl
 provider "n0stack" {
 	endpoint = "192.168.1.31:20180"
 }
@@ -108,7 +108,7 @@ resource "n0stack_virtualmachine" "MyVM" {
 
 ### プロバイダ設定
 
-```
+```hcl
 provider "n0stack" {
 	endpoint = "192.168.1.31:20180"
 }
@@ -134,7 +134,7 @@ n0stack apiサーバーの設定をここでする。
 
 例: 
 
-```
+```hcl
 resource "n0stack_blockstorage" "MyDisk" {
 	image_name = "Ubuntu18.04"
 	blockstorage_name = "MyDisk"
@@ -157,7 +157,7 @@ resource "n0stack_blockstorage" "MyDisk" {
 
 例:
 
-```
+```hcl
 resource "n0stack_network" "MyNetwork" {
 	name = "MyNetwork"
 	ipv4_cidr = "192.168.100.0/24"
@@ -186,7 +186,7 @@ resource "n0stack_network" "MyNetwork" {
 
 例:
 
-```
+```hcl
 resource "n0stack_virtualmachine" "MyVM" {
 	name = "MyVM"
 	annotations = {
@@ -212,7 +212,7 @@ resource "n0stack_virtualmachine" "MyVM" {
 
 例:
 
-```
+```hcl
 resource "n0stack_image" "MyImage" {
 	image_name = "MyImage"
 	blockstorage_name = "MyDisk"
